@@ -1,7 +1,9 @@
+import { Login } from '../routes/login/Login';
+
 export const ROUTES = [
   {
     path: '/',
-    element: <div>login route</div>,
+    element: <Login />,
   },
   {
     path: '/register',
