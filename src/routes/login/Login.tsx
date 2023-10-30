@@ -1,9 +1,39 @@
+import {
+  Anchor,
+  Button,
+  Checkbox,
+  Group,
+  Paper,
+  PasswordInput,
+  TextInput,
+} from '@mantine/core';
 import { Page } from '../../components/page/Page';
+
+import css from './login.module.css';
 
 export const Login = () => {
   return (
     <Page>
-      <div>login route</div>
+      <div className={css.formContainer}>
+        <Paper className={css.form} withBorder shadow="md" p={30} radius="md">
+          <TextInput label="Email" placeholder="test@test.com" required />
+          <PasswordInput
+            label="Password"
+            placeholder="Your password"
+            required
+            mt="md"
+          />
+          <Group justify="space-between" mt="lg">
+            <Checkbox label="Remember me" />
+            <Anchor component="button" size="sm">
+              Forgot password?
+            </Anchor>
+          </Group>
+          <Button fullWidth mt="xl">
+            Sign in
+          </Button>
+        </Paper>
+      </div>
     </Page>
   );
 };

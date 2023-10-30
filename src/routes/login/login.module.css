@@ -1,2 +1,12 @@
 
 
+.formContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  .form {
+    width: 360px;
+  }
+}
