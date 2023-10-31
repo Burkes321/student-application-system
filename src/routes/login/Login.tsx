@@ -7,11 +7,19 @@ import {
   PasswordInput,
   TextInput,
 } from '@mantine/core';
-import { Page } from '../../components/page/Page';
+import { useCallback, useState } from 'react';
 
 import css from './login.module.css';
 
+import { Page } from '../../components/page/Page';
+
 export const Login = () => {
+  // could implement useReducer hook here but since we only have two fields, use state is fine
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleFormSubmit = useCallback(() => {}, []);
+
   return (
     <Page>
       <div className={css.formContainer}>
