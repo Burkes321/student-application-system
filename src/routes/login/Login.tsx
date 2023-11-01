@@ -1,28 +1,25 @@
-import {
-  Anchor,
-  Button,
-  Checkbox,
-  Group,
-  Paper,
-  PasswordInput,
-  TextInput,
-} from '@mantine/core';
+import { Button, Paper, PasswordInput, TextInput } from '@mantine/core';
 import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import css from './login.module.css';
 
 import { Page } from '../../components/page/Page';
 
-export const Login = () => {
-  const fakeUser = {
-    email: 'fakeUser@fake.com',
-    password: 'password1',
-  };
+const dummyUser = {
+  email: 'test@test.com',
+  password: 'password123',
+};
 
-  // could implement useReducer hook here but since we only have two fields, use state is fine
-  const [email, setEmail] = useState('test@test.com');
-  const [password, setPassword] = useState('passwordhere');
+export const Login = () => {
+  const navigate = useNavigate();
+
+  // Normally for handling form data, using a useReducer hook is better but since we just have two fields, use state calls are fine
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const [isEmailInvalid, setIsEmailInvalid] = useState(false);
+  const [areCredentialsInvalid, setAreCredentialsInvalid] = useState(false);
 
   // mantine has build in form validation but it made sense for this task to do the email by hand
   const validateEmail = useCallback(
@@ -30,16 +27,29 @@ export const Login = () => {
     []
   );
 
+  useEffect(() => {
+    console.log(isEmailInvalid);
+  });
+
   const handleFormSubmit = useCallback(() => {
-    if (!validateEmail) {
+    if (!validateEmail(email)) {
       setIsEmailInvalid(true);
       return;
     }
 
     setIsEmailInvalid(false);
 
-    // TODO: check here against some dummy user and if the credentials then redirect to the home page
-  }, [validateEmail]);
+    if (email !== dummyUser.email && password !== dummyUser.password) {
+      setAreCredentialsInvalid(true);
+      return;
+    }
+
+    if (email === dummyUser.email && password === dummyUser.password) {
+      setIsEmailInvalid(false);
+      setAreCredentialsInvalid(false);
+      navigate('/home');
+    }
+  }, [email, navigate, password, validateEmail]);
 
   return (
     <Page>
@@ -60,6 +70,16 @@ export const Login = () => {
             mt="md"
             onChange={(event) => setPassword(event.currentTarget.value)}
           />
+          {isEmailInvalid && (
+            <div className={css.badCredentialsWarning}>
+              Please submit a valid email address
+            </div>
+          )}
+          {areCredentialsInvalid && (
+            <div className={css.badCredentialsWarning}>
+              Bad credentials, please check your email and password
+            </div>
+          )}
           <Button fullWidth mt="xl" onClick={handleFormSubmit}>
             Sign in
           </Button>
