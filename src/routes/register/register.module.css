@@ -7,4 +7,9 @@
   .form {
     width: 480px;
   }
+
+  .badCredentialsWarning {
+    color: var(--mantine-color-red-7);
+    margin-top: 20px;
+  }
 }

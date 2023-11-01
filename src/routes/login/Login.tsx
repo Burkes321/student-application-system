@@ -1,10 +1,11 @@
 import { Button, Paper, PasswordInput, TextInput } from '@mantine/core';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import css from './login.module.css';
 
 import { Page } from '../../components/page/Page';
+import { isEmailValid } from '../utils/isEmailValid';
 
 const dummyUser = {
   email: 'test@test.com',
@@ -21,18 +22,8 @@ export const Login = () => {
   const [isEmailInvalid, setIsEmailInvalid] = useState(false);
   const [areCredentialsInvalid, setAreCredentialsInvalid] = useState(false);
 
-  // mantine has build in form validation but it made sense for this task to do the email by hand
-  const validateEmail = useCallback(
-    (email: string) => /^\S+@\S+$/.test(email),
-    []
-  );
-
-  useEffect(() => {
-    console.log(isEmailInvalid);
-  });
-
   const handleFormSubmit = useCallback(() => {
-    if (!validateEmail(email)) {
+    if (!isEmailValid(email)) {
       setIsEmailInvalid(true);
       return;
     }
@@ -49,7 +40,7 @@ export const Login = () => {
       setAreCredentialsInvalid(false);
       navigate('/home');
     }
-  }, [email, navigate, password, validateEmail]);
+  }, [email, navigate, password]);
 
   return (
     <Page>
@@ -70,16 +61,19 @@ export const Login = () => {
             mt="md"
             onChange={(event) => setPassword(event.currentTarget.value)}
           />
+
           {isEmailInvalid && (
             <div className={css.badCredentialsWarning}>
               Please submit a valid email address
             </div>
           )}
+
           {areCredentialsInvalid && (
             <div className={css.badCredentialsWarning}>
               Bad credentials, please check your email and password
             </div>
           )}
+
           <Button fullWidth mt="xl" onClick={handleFormSubmit}>
             Sign in
           </Button>
