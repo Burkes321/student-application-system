@@ -22,8 +22,6 @@ export const Register = () => {
     password: '',
   });
 
-  console.log(registeredUser);
-
   // TODO: since this is used in two pages maybe this can be part of custom hook
   const [isEmailInvalid, setIsEmailInvalid] = useState(false);
   const [notMatchingPasswords, setNotMatchingPasswords] = useState(false);
