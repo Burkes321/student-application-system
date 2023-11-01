@@ -1,4 +1,5 @@
 import { Login } from '../routes/login/Login';
+import { Register } from '../routes/register/Register';
 
 export const ROUTES = [
   {
@@ -7,7 +8,7 @@ export const ROUTES = [
   },
   {
     path: '/register',
-    element: <div>register route</div>,
+    element: <Register />,
   },
   {
     path: '/home',
