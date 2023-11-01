@@ -1,3 +1,4 @@
+import { Home } from '../routes/home/Home';
 import { Login } from '../routes/login/Login';
 import { Register } from '../routes/register/Register';
 
@@ -12,6 +13,6 @@ export const ROUTES = [
   },
   {
     path: '/home',
-    element: <div>Home</div>,
+    element: <Home />,
   },
 ];

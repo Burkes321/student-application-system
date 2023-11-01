@@ -8,6 +8,7 @@ import { Page } from '../../components/page/Page';
 import { isEmailValid } from '../utils/isEmailValid';
 
 export const Register = () => {
+  console.log('register run');
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
