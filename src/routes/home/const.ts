@@ -27,18 +27,7 @@ const DURATIONS = [
   '8 years',
 ];
 
-const LANGUAGES = [
-  'Mandarin',
-  'Spanish',
-  'English',
-  'Hindi',
-  'Portugese',
-  'Bengali',
-  'Russian',
-  'Japanese',
-  'Vietnamese',
-  'Turkish',
-];
+const LANGUAGES = ['English', 'French', 'Turkish'];
 
 export const APPLICATIONS = new Array(50).fill(null).map(() => ({
   name: faker.person.fullName(),
