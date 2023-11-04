@@ -14,16 +14,7 @@ export const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  // TODO: not sure if we want to keep this - could make session info context and pass the user around
-  const [registeredUser, setRegisteredUser] = useState<{
-    email: string;
-    password: string;
-  }>({
-    email: '',
-    password: '',
-  });
 
-  // TODO: since this is used in two pages maybe this can be part of custom hook
   const [isEmailInvalid, setIsEmailInvalid] = useState(false);
   const [notMatchingPasswords, setNotMatchingPasswords] = useState(false);
 
@@ -46,15 +37,10 @@ export const Register = () => {
 
     // if there are no issues with the form submission then redir to the home page
 
-    setRegisteredUser({
-      email,
-      password,
-    });
-
     navigate('/home');
 
     return;
-  }, [email, isPasswordInvalid, navigate, password]);
+  }, [email, isPasswordInvalid, navigate]);
 
   return (
     <Page>
