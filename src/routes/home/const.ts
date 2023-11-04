@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 
-const findRandomEntry = (max: number, min: number) =>
-  Math.floor(Math.random() * (max - min + 1)) + min;
+const getRandomArrayItem = (arr: string[]) =>
+  arr[Math.floor(Math.random() * arr.length)];
 
 const UNIVERSITIES = [
   'University of Cambridge',
@@ -16,7 +16,7 @@ const UNIVERSITIES = [
   'Lancaster University',
 ];
 
-const DURATIONS = [
+export const DURATIONS = [
   '1 year',
   '2 years',
   '3 years',
@@ -31,13 +31,14 @@ const LANGUAGES = ['English', 'French', 'Turkish'];
 
 export const APPLICATIONS = new Array(50).fill(null).map(() => ({
   name: faker.person.fullName(),
-  university: UNIVERSITIES[findRandomEntry(1, UNIVERSITIES.length)],
+  university: getRandomArrayItem(UNIVERSITIES),
   country: faker.location.country(),
-  duration: DURATIONS[findRandomEntry(1, DURATIONS.length)],
+  duration: getRandomArrayItem(DURATIONS),
   cost: faker.number.int({ min: 1000, max: 300000 }),
   applicationDeadlineDate: faker.date.between({
     from: '2024-01-01T00:00:00.000Z',
     to: '2030-01-01T00:00:00.000Z',
   }),
-  language: LANGUAGES[findRandomEntry(1, LANGUAGES.length)],
+  // TODO: fix bug with finding random lanauge entry
+  language: getRandomArrayItem(LANGUAGES),
 }));

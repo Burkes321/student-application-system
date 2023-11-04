@@ -1,3 +1,11 @@
+.filtersContainer {
+  display: flex;
+  gap: 12px;
+  /* TODO: fix this mix of padding and margin */
+  padding-top: 20px;
+  margin-bottom: 20px;
+}
+
 .pagination {
   margin-top: 20px;
 }

@@ -1,18 +1,14 @@
-import { Table, Pagination } from '@mantine/core';
+import { Table, Pagination, MultiSelect } from '@mantine/core';
 import { useState } from 'react';
 
 import { APPLICATIONS } from './const';
 import css from './home.module.css';
+import { findFilterValuesFromList } from './utils/findFilterValuesFromList';
 
 import { Page } from '../../components/page/Page';
 
 export const Home = () => {
-  console.log('🚀 ~ file: Home.tsx:5 ~ APPLICATIONS:', APPLICATIONS);
   const [currentPage, setCurrentPage] = useState(1);
-
-  // cur page 0 shows 0 to 9
-  // then 10 to 19
-  // then 20 to 29
 
   const rows = APPLICATIONS.map((application) => (
     <Table.Tr key={application.cost} className={css.tableRow}>
@@ -26,10 +22,29 @@ export const Home = () => {
     </Table.Tr>
   )).slice((currentPage - 1) * 10, currentPage * 10);
 
-  // TODO: create a hook here which manages which list items to show
-
   return (
     <Page>
+      <div className={css.filtersContainer}>
+        <MultiSelect
+          placeholder="univeristy"
+          data={findFilterValuesFromList(APPLICATIONS, 'university')}
+        />
+        <MultiSelect
+          placeholder="country"
+          data={findFilterValuesFromList(APPLICATIONS, 'country')}
+        />
+        <MultiSelect
+          placeholder="duration"
+          data={findFilterValuesFromList(APPLICATIONS, 'country')}
+        />
+        <MultiSelect
+          placeholder="language"
+          data={findFilterValuesFromList(APPLICATIONS, 'language')}
+        />
+        {/* TODO: Programmatically implement the filter as a range */}
+        <MultiSelect placeholder="cost" />
+      </div>
+
       <Table>
         <Table.Thead>
           <Table.Tr>
