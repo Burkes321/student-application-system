@@ -11,6 +11,7 @@ import { Page } from '../../components/page/Page';
 export const Home = () => {
   const { filter, setFilter } = useHomeFilter();
   const [currentPage, setCurrentPage] = useState(1);
+
   const [universityFilterValue, setUniversityFilterValue] = useState<
     string | null
   >('');
@@ -23,8 +24,26 @@ export const Home = () => {
   );
   const [costFilterValue, setCostFilterValue] = useState(filter.cost);
 
-  useEffect(() => {
-    console.log('🚀 ~ file: Home.tsx:13 ~ Home ~ filter:', filter);
+  const filteredApplications = APPLICATIONS.filter((application) => {
+    const universityFilter = filter.university
+      ? filter.university === application.university
+      : true;
+
+    const countryFilter = filter.country
+      ? filter.country === application.country
+      : true;
+
+    const durationFilter = filter.duration
+      ? filter.duration === application.duration
+      : true;
+
+    const languageFilter = filter.language
+      ? filter.language === application.language
+      : true;
+
+    return (
+      universityFilter && countryFilter && durationFilter && languageFilter
+    );
   });
 
   useEffect(() => {
@@ -47,17 +66,21 @@ export const Home = () => {
     universityFilterValue,
   ]);
 
-  const rows = APPLICATIONS.map((application) => (
-    <Table.Tr key={application.cost} className={css.tableRow}>
-      <Table.Td>{application.name}</Table.Td>
-      <Table.Td>{application.university}</Table.Td>
-      <Table.Td>{application.country}</Table.Td>
-      <Table.Td>{application.duration}</Table.Td>
-      <Table.Td>{application.cost}</Table.Td>
-      <Table.Td>{application.applicationDeadlineDate.toDateString()}</Table.Td>
-      <Table.Td>{application.language}</Table.Td>
-    </Table.Tr>
-  )).slice((currentPage - 1) * 10, currentPage * 10);
+  const rows = filteredApplications
+    .map((application) => (
+      <Table.Tr key={application.cost} className={css.tableRow}>
+        <Table.Td>{application.name}</Table.Td>
+        <Table.Td>{application.university}</Table.Td>
+        <Table.Td>{application.country}</Table.Td>
+        <Table.Td>{application.duration}</Table.Td>
+        <Table.Td>{application.cost}</Table.Td>
+        <Table.Td>
+          {application.applicationDeadlineDate.toDateString()}
+        </Table.Td>
+        <Table.Td>{application.language}</Table.Td>
+      </Table.Tr>
+    ))
+    .slice((currentPage - 1) * 10, currentPage * 10);
 
   return (
     <Page>
@@ -110,7 +133,7 @@ export const Home = () => {
         className={css.pagination}
         value={currentPage}
         onChange={setCurrentPage}
-        total={APPLICATIONS.length / 10}
+        total={Math.ceil(filteredApplications.length / 10)}
       />
     </Page>
   );
