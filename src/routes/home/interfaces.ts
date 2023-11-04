@@ -3,7 +3,7 @@ export type Application = {
   university: string;
   country: string;
   duration: string;
-  cost: number;
+  cost: string;
   applicationDeadlineDate: Date;
   language: string;
 };

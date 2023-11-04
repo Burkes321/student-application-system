@@ -1,25 +1,12 @@
 import { useState } from 'react';
 
-// TODO: this is not a hook so we can remove it
-
-type DurationFilterOptions =
-  | ''
-  | '1 year'
-  | '2 years'
-  | '3 years'
-  | '4 years'
-  | '5 years'
-  | '6 years'
-  | '7 years'
-  | '8 years';
-
 export type HomeFilter = {
   university: string | null;
   country: string | null;
   language: string | null;
-  duration: DurationFilterOptions | null;
-  // TODO: maybe convert the cost to a string
-  cost: number | null;
+  // restricted on typing duration by mantine. Proper type should be <"durationFilterOption" | null>
+  duration: string | null;
+  cost: string | null;
 };
 
 const DEFAULT_HOME_FILTER: HomeFilter = {
@@ -27,7 +14,7 @@ const DEFAULT_HOME_FILTER: HomeFilter = {
   country: '',
   language: '',
   duration: '',
-  cost: 0,
+  cost: '',
 };
 
 export const useHomeFilter = () => {
