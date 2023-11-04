@@ -1,14 +1,51 @@
-import { Table, Pagination, MultiSelect } from '@mantine/core';
-import { useState } from 'react';
+import { Table, Pagination, Select } from '@mantine/core';
+import { useEffect, useState } from 'react';
 
 import { APPLICATIONS } from './const';
 import css from './home.module.css';
+import { useHomeFilter } from './hooks/useFilteredList';
 import { findFilterValuesFromList } from './utils/findFilterValuesFromList';
 
 import { Page } from '../../components/page/Page';
 
 export const Home = () => {
+  const { filter, setFilter } = useHomeFilter();
   const [currentPage, setCurrentPage] = useState(1);
+  const [universityFilterValue, setUniversityFilterValue] = useState<
+    string | null
+  >('');
+  const [countryFilterValue, setCountryFilterValue] = useState(filter.country);
+  const [durationFilterValue, setDurationFilterValue] = useState(
+    filter.duration
+  );
+  const [languageFilterValue, setLanguageFilterValue] = useState(
+    filter.language
+  );
+  const [costFilterValue, setCostFilterValue] = useState(filter.cost);
+
+  useEffect(() => {
+    console.log('🚀 ~ file: Home.tsx:13 ~ Home ~ filter:', filter);
+  });
+
+  useEffect(() => {
+    setFilter({
+      ...filter,
+      university: universityFilterValue,
+      country: countryFilterValue,
+      language: languageFilterValue,
+      duration: durationFilterValue,
+      cost: costFilterValue,
+    });
+    /* eslint-disable react-hooks/exhaustive-deps */
+  }, [
+    costFilterValue,
+    countryFilterValue,
+    currentPage,
+    durationFilterValue,
+    languageFilterValue,
+    setFilter,
+    universityFilterValue,
+  ]);
 
   const rows = APPLICATIONS.map((application) => (
     <Table.Tr key={application.cost} className={css.tableRow}>
@@ -25,24 +62,33 @@ export const Home = () => {
   return (
     <Page>
       <div className={css.filtersContainer}>
-        <MultiSelect
+        <Select
           placeholder="univeristy"
-          data={findFilterValuesFromList(APPLICATIONS, 'university')}
+          data={findFilterValuesFromList(APPLICATIONS, 'university').sort()}
+          value={filter.university}
+          onChange={setUniversityFilterValue}
         />
-        <MultiSelect
+        <Select
           placeholder="country"
-          data={findFilterValuesFromList(APPLICATIONS, 'country')}
+          data={findFilterValuesFromList(APPLICATIONS, 'country').sort()}
+          value={filter.country}
+          onChange={setCountryFilterValue}
         />
-        <MultiSelect
+        <Select
           placeholder="duration"
-          data={findFilterValuesFromList(APPLICATIONS, 'country')}
+          data={findFilterValuesFromList(APPLICATIONS, 'duration').sort()}
+          value={filter.duration}
+          // TODO: fix typing error
+          onChange={setDurationFilterValue}
         />
-        <MultiSelect
+        <Select
           placeholder="language"
-          data={findFilterValuesFromList(APPLICATIONS, 'language')}
+          data={findFilterValuesFromList(APPLICATIONS, 'language').sort()}
+          value={filter.language}
+          onChange={setLanguageFilterValue}
         />
-        {/* TODO: Programmatically implement the filter as a range */}
-        <MultiSelect placeholder="cost" />
+        {/* TODO: implement cost filter - number type causes issues */}
+        <Select placeholder="cost" />
       </div>
 
       <Table>
