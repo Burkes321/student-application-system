@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { APPLICATIONS } from './const';
 import css from './home.module.css';
-import { useHomeFilter } from './hooks/useFilteredList';
+import { useHomeFilter } from './hooks/useHomeFilter';
 import { findFilterValuesFromList } from './utils/findFilterValuesFromList';
 
 import { Page } from '../../components/page/Page';
