@@ -20,17 +20,25 @@ export const Login = () => {
   const [password, setPassword] = useState('');
 
   const [isEmailInvalid, setIsEmailInvalid] = useState(false);
+  const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
   const [areCredentialsInvalid, setAreCredentialsInvalid] = useState(false);
 
   const handleFormSubmit = useCallback(() => {
+    setIsEmailInvalid(false);
+    setIsPasswordInvalid(false);
+    setAreCredentialsInvalid(false);
+
     if (!isEmailValid(email)) {
       setIsEmailInvalid(true);
       return;
     }
 
-    setIsEmailInvalid(false);
+    if (!password) {
+      setIsPasswordInvalid(true);
+      return;
+    }
 
-    if (email !== dummyUser.email && password !== dummyUser.password) {
+    if (email !== dummyUser.email || password !== dummyUser.password) {
       setAreCredentialsInvalid(true);
       return;
     }
@@ -65,6 +73,12 @@ export const Login = () => {
           {isEmailInvalid && (
             <div className={css.badCredentialsWarning}>
               Please submit a valid email address
+            </div>
+          )}
+
+          {isPasswordInvalid && (
+            <div className={css.badCredentialsWarning}>
+              It seems like you didn't enter a password. Please enter one.
             </div>
           )}
 
