@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+// TODO: this is not a hook so we can remove it
+
 type DurationFilterOptions =
   | ''
   | '1 year'
@@ -16,7 +18,7 @@ export type HomeFilter = {
   country: string | null;
   language: string | null;
   duration: DurationFilterOptions | null;
-  // TODO: maybe convert the cost to a number
+  // TODO: maybe convert the cost to a string
   cost: number | null;
 };
 
