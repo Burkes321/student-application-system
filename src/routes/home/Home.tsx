@@ -112,7 +112,6 @@ export const Home = () => {
           placeholder="duration"
           data={findFilterValuesFromList(APPLICATIONS, 'duration').sort()}
           value={filter.duration}
-          // TODO: fix typing error
           onChange={setDurationFilterValue}
         />
         <Select
@@ -121,7 +120,8 @@ export const Home = () => {
           value={filter.language}
           onChange={setLanguageFilterValue}
         />
-        {/* TODO: implement cost filter - number type causes issues */}
+        {/* NOTE: Way this works is not ideal but implemented like this due to time constraint
+          would be better to have it work as a range filter, i.e. between certain values. Currently is just a list of costs present in list items */}
         <Select
           placeholder="cost"
           data={findFilterValuesFromList(APPLICATIONS, 'cost').sort((a, b) => {
