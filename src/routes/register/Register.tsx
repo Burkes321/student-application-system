@@ -14,7 +14,7 @@ export const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  // TODO: Not sure if we want to keep this dummy user - if we do we can pass it around in a context
+  // TODO: not sure if we want to keep this - could make session info context and pass the user around
   const [registeredUser, setRegisteredUser] = useState<{
     email: string;
     password: string;
