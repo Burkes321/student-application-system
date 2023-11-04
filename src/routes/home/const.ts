@@ -34,11 +34,10 @@ export const APPLICATIONS = new Array(50).fill(null).map(() => ({
   university: getRandomArrayItem(UNIVERSITIES),
   country: faker.location.country(),
   duration: getRandomArrayItem(DURATIONS),
-  cost: faker.number.int({ min: 1000, max: 300000 }),
+  cost: faker.number.int({ min: 1000, max: 300000 }).toString(),
   applicationDeadlineDate: faker.date.between({
     from: '2024-01-01T00:00:00.000Z',
     to: '2030-01-01T00:00:00.000Z',
   }),
-  // TODO: fix bug with finding random lanauge entry
   language: getRandomArrayItem(LANGUAGES),
 }));

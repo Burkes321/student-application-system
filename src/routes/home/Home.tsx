@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { APPLICATIONS } from './const';
 import css from './home.module.css';
 import { useHomeFilter } from './hooks/useHomeFilter';
+import { Application } from './interfaces';
 import { findFilterValuesFromList } from './utils/findFilterValuesFromList';
 
 import { Page } from '../../components/page/Page';
@@ -12,9 +13,11 @@ export const Home = () => {
   const { filter, setFilter } = useHomeFilter();
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Stretch goal would be to implement the filter state handlers as useReducer call
+  // No change to functionality, but it would be better for extensbility and dev experience.
   const [universityFilterValue, setUniversityFilterValue] = useState<
     string | null
-  >('');
+  >(filter.university);
   const [countryFilterValue, setCountryFilterValue] = useState(filter.country);
   const [durationFilterValue, setDurationFilterValue] = useState(
     filter.duration
@@ -24,7 +27,7 @@ export const Home = () => {
   );
   const [costFilterValue, setCostFilterValue] = useState(filter.cost);
 
-  const filteredApplications = APPLICATIONS.filter((application) => {
+  const filterFunction = (application: Application) => {
     const universityFilter = filter.university
       ? filter.university === application.university
       : true;
@@ -41,10 +44,18 @@ export const Home = () => {
       ? filter.language === application.language
       : true;
 
+    const costFilter = filter.cost ? filter.cost === application.cost : true;
+
     return (
-      universityFilter && countryFilter && durationFilter && languageFilter
+      universityFilter &&
+      countryFilter &&
+      durationFilter &&
+      languageFilter &&
+      costFilter
     );
-  });
+  };
+
+  const filteredApplications = APPLICATIONS.filter(filterFunction);
 
   useEffect(() => {
     setFilter({
@@ -111,7 +122,14 @@ export const Home = () => {
           onChange={setLanguageFilterValue}
         />
         {/* TODO: implement cost filter - number type causes issues */}
-        <Select placeholder="cost" />
+        <Select
+          placeholder="cost"
+          data={findFilterValuesFromList(APPLICATIONS, 'cost').sort((a, b) => {
+            return parseInt(a) > parseInt(b) ? 1 : -1;
+          })}
+          value={filter.cost}
+          onChange={setCostFilterValue}
+        />
       </div>
 
       <Table>
