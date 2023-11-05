@@ -22,9 +22,10 @@ run `npm run dev` at the root folder after installing dependencies. This project
 
 Login route -> find this at '/'
 
-\*\* you can login here using the fake user credentials at `Login.tsx:10`\*\*
+**you can login here using the fake user credentials at `Login.tsx:10`**
 
 Registration route -> find this at '/registration'
+
 Home route (application management system) -> find this at '/home'
 
 All other routes lead to default vite 404 error
