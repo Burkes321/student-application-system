@@ -78,10 +78,12 @@ export const Home = () => {
         )
           return 0;
 
-        return applicationA.applicationDeadlineDate >
+        return (
+          (applicationA.applicationDeadlineDate >
           applicationB.applicationDeadlineDate
-          ? 1
-          : -1;
+            ? 1
+            : -1) * (sortAsc ? 1 : -1)
+        );
       };
     }
   };
@@ -185,7 +187,7 @@ export const Home = () => {
               onClick={() => {
                 setSortBy('applicationDeadlineDate');
 
-                setSortAsc(true);
+                setSortAsc(!sortAsc);
               }}
             >
               Application Deadline Date
