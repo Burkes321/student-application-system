@@ -21,6 +21,9 @@ run `npm run dev` at the root folder after installing dependencies. This project
 ## Routes
 
 Login route -> find this at '/'
+
+\*\* you can login here using the fake user credentials at `Login.tsx:10`\*\*
+
 Registration route -> find this at '/registration'
 Home route (application management system) -> find this at '/home'
 
