@@ -26,6 +26,8 @@ export const Home = () => {
     filter.language
   );
   const [costFilterValue, setCostFilterValue] = useState(filter.cost);
+  const [sortBy, setSortBy] = useState('');
+  const [sortAsc, setSortAsc] = useState(true);
 
   const filterFunction = (application: Application) => {
     const universityFilter = filter.university
@@ -55,7 +57,38 @@ export const Home = () => {
     );
   };
 
-  const filteredApplications = APPLICATIONS.filter(filterFunction);
+  const sortingFunction = (sortBy: string, sortAsc: boolean) => {
+    if (sortBy === 'cost') {
+      return (applicationA: Application, applicationB: Application) => {
+        if (parseInt(applicationA.cost) === parseInt(applicationB.cost))
+          return 0;
+
+        return (
+          (parseInt(applicationA.cost) > parseInt(applicationB.cost) ? 1 : -1) *
+          (sortAsc ? 1 : -1)
+        );
+      };
+    }
+
+    if (sortBy === 'applicationDeadlineDate') {
+      return (applicationA: Application, applicationB: Application) => {
+        if (
+          applicationA.applicationDeadlineDate ===
+          applicationB.applicationDeadlineDate
+        )
+          return 0;
+
+        return applicationA.applicationDeadlineDate >
+          applicationB.applicationDeadlineDate
+          ? 1
+          : -1;
+      };
+    }
+  };
+
+  const filteredApplications = APPLICATIONS.filter(filterFunction).sort(
+    sortingFunction(sortBy, sortAsc)
+  );
 
   useEffect(() => {
     setFilter({
@@ -139,8 +172,24 @@ export const Home = () => {
             <Table.Th>University</Table.Th>
             <Table.Th>Country</Table.Th>
             <Table.Th>Duration</Table.Th>
-            <Table.Th>Cost</Table.Th>
-            <Table.Th>ApplicationDeadlineDate</Table.Th>
+            <Table.Th
+              onClick={() => {
+                setSortBy('cost');
+
+                setSortAsc(!sortAsc);
+              }}
+            >
+              Cost
+            </Table.Th>
+            <Table.Th
+              onClick={() => {
+                setSortBy('applicationDeadlineDate');
+
+                setSortAsc(true);
+              }}
+            >
+              Application Deadline Date
+            </Table.Th>
             <Table.Th>Language</Table.Th>
           </Table.Tr>
         </Table.Thead>
