@@ -32,14 +32,6 @@ All other routes lead to default vite 404 error
 
 ### Home
 
-Shows a list of 50 applications which can be filtered using the filters at the top of the page, or sorted by clicking on the header of the cost and deadline columns (there are no ui indicators for this - also mentioned in notes section). Filters gather their options from what is in the list for that particular field.
+Shows a list of 50 applications which can be filtered using the filters at the top of the page, or sorted by clicking on the header of the cost and deadline columns. Filters gather their options from what is in the list for that particular field.
 
 They are paginated by sets of 10, and you can switch between pages using the pagination component.
-
-## notes
-
-the project guidelines did not state to implement a full front-end authentication solution using context, so I didn't do this. I would have used context and some sort of session info hook to update the context on successful login, and used that context to redirect to login from protected routes. Currently no routes are protected on the frontend, the only verification is on the forms.
-
-I also would have implemented more tests. For now only utils are tested. Time was an issue, but would have been good to implement tests for the Login / reg forms and for the table functionality. testing was the thing i decided to skip as it was not in the spec, but I would put it in any production project.
-
-There are not any ui indicators for the sortable columns due to time constraint.
